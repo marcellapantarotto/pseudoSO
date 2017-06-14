@@ -4,13 +4,14 @@
 #include <semaphore.h>
 #include <pthread.h>
 
+// enumeração: constantes do tipo inteiro
 enum Resources{
   WITHOUT_RESOURCES = 0,
   WITH_RESOURCES, SCANNER, PRINTER, MODEM, SATA= 1
 };
 
-// global semaphores type sem_t
-// extern makes variables linkeble to other fles
+// semáforos globais do tipo sem_t
+// extern permite que variáveis sejam linkadas em outros arquivos
 extern sem_t scanner;
 extern sem_t printer;
 extern sem_t modem;

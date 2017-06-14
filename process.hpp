@@ -9,6 +9,7 @@
 #include <ctime>
 #include <cstdlib>
 #include "resource.hpp"
+
 #define PERCENTAGE 101
 #define QUANTUM 1
 

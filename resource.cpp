@@ -1,18 +1,18 @@
 #include "resource.hpp"
 
-// semaphores type sem_t
+// semáforos do tipo sem_t
 sem_t scanner;
 sem_t printer;
 sem_t modem;
 sem_t sata;
 
-// function to initialize semaphores
+// função que inicializa os semáforos
 void InitializeSemaphores()
 {
-	// sem_init() initializes a semaphores
-	// first argument indicates if the semaphore is shared:
-	// 0 = shared between threads of a process; !0 = shared between processes
-	// second argument indicates the value of the semaphore
+	// sem_init() inicializa o semáforo
+	// primeiro argumento determina se o semáforo é compartilhado ou não:
+	// 			0 = compartilhado entre threas de um processo; !0 = compartilhado entre pocessos
+	// segundo argumento indica o valor do semáforo
 	sem_init(&scanner, 0, 1);
 	sem_init(&printer, 0, 2);
 	sem_init(&modem, 0, 1);
@@ -20,13 +20,14 @@ void InitializeSemaphores()
 	return;
 }
 
+// função para bloquear recursos
 int blockResource(int resource)
 {
 	int blo = 0;
 	switch(resource)
 	{
-		// sem_trywait() locks the semaphore if it is not already locked
-		// sem must be positve
+		// sem_trywait() bloqueia um semáforo se ele já não estiver bloqueado
+		// tem que ser positivo
 		case SCANNER:
 			if(sem_trywait(&scanner) == 0)
 				blo = 1;
@@ -49,11 +50,12 @@ int blockResource(int resource)
 	return blo;
 }
 
+// função para liberar recursos
 void freeResource(int resource)
 {
 	switch(resource)
 	{
-		//sem_post() liberates the semaphore
+		//sem_post() libera o semáforo
 		case PRINTER:
 			sem_post(&printer);
 			break;
