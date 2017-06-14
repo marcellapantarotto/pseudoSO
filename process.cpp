@@ -140,20 +140,14 @@ int Process::usesResource() {
 			while(redo) {
 				redo = 0;
 				use = rand()%4 + 1;
-				switch(use) {
-					case SCANNER:
+				if (use == 1)
 						if(!getScanner()) redo = 1;
-						break;
-					case PRINTER:
+				else if(use == 2)
 						if(!getPrinter()) redo = 1;
-						break;
-					case MODEM:
+				else if(use == 3)
 						if(!getModem()) redo = 1;
-						break;
-					case SATA:
+				else if(use == 4)
 						if(!getSata()) redo = 1;
-						break;
-				}
 			};
 		}
 	}
