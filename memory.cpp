@@ -4,10 +4,10 @@
 Memory::Memory(){
 		//Zera memoria
 	int i=0;
-	do {
+	while(i<MAX_MEM) {
 		mem[i] = 0;
-		i++;
-	}while(i<MAX_MEM);
+		++i;
+	};
 
 }
 unsigned int Memory::allocation(unsigned int malloc, int type){
@@ -15,7 +15,7 @@ unsigned int Memory::allocation(unsigned int malloc, int type){
 	switch(type){
 		case REAL_TIME:
 			if(malloc > MAX_REAL){
-				offset = 1026; //Verificar
+				offset = 1026;
 				return offset;
 			}
 			offset = verification(malloc,START,MAX_REAL); //Verifica quantidade de memoria ram e se ela está entre o inicio e o final.
@@ -38,10 +38,10 @@ unsigned int Memory::allocation(unsigned int malloc, int type){
 
 void Memory::deallocation(unsigned int offset,unsigned int malloc){
 	int i=offset;
-	do {
+	while(i < malloc + offset) {
 		mem[i] = 0;
-		i++;
-	} while(i<malloc+offset);
+		++i;
+	};
 }
 
 void Memory::display(){
@@ -57,7 +57,9 @@ unsigned int Memory::verification(unsigned int malloc, unsigned int start, unsig
 	for(int i=start; i<end; i++)	{
 		j = i;
 
-		while (mem[j] == 0 && j < malloc + i) j++;
+		while (mem[j] == 0 && j < malloc + i) {
+			++j;
+		}
 
 		if (j == malloc + i){
 			offset = i;
