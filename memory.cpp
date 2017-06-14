@@ -21,14 +21,14 @@ unsigned int Memory::allocation(unsigned int qtd, int tipo_p){
 	switch(tipo_p){
 		case REAL_TIME:
 			if(qtd > MAX_REAL){
-				offset = 1026; //Verificar
+				offset = 1025;
 				return offset;
 			}
 			offset = verify(qtd,START,MAX_REAL); //Verifica quantidade de memoria ram e se ela está entre o inicio e o final.
 		  break;
 		default:
 			if(qtd > USER_MAX){
-				offset = 1026;
+				offset = 1025;
 				return offset;
 			}
 			offset = verify(qtd,MAX_REAL,MAX_MEM);
