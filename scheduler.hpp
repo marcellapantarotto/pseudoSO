@@ -1,5 +1,5 @@
-#ifndef scheduler_HPP
-#define scheduler_HPP
+#ifndef SCHEDULER_HPP
+#define SCHEDULER_HPP
 
 #include <fstream>
 #include <vector>
@@ -12,7 +12,7 @@
 #include "process.hpp"
 #include "memory.hpp"
 
-class scheduler
+class Scheduler
 {
 	private:
 		//typedef std::vector<Process> process_t;
@@ -41,4 +41,4 @@ class scheduler
 
 };
 
-#endif //scheduler_HPP
+#endif //SCHEDULER_HPP
