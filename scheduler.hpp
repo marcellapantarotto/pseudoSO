@@ -14,6 +14,12 @@
 
 class Scheduler
 {
+	public:
+		int clock;
+		void readFile(string filename);
+		int getClock();
+		void simulation();
+		
 	private:
 		//typedef std::vector<Process> process_t;
 		vector<Process> processes;
@@ -33,13 +39,6 @@ class Scheduler
 		void displayProcessQueue();
 		void dispatcher (Process& p);
 		void displayExecution(Process p);
-		
-	public:
-		int clock;
-		void readFile(string filename);
-		int getClock();
-		void simulation();
-
 };
 
 #endif //SCHEDULER_HPP

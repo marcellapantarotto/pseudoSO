@@ -1,10 +1,11 @@
 #include "scheduler.hpp"
 
-//clock = seconds passed
+//clock = aquantidade de segundo de execução
 void Scheduler::startTime() {
 	clock = 0;
 }
 
+// função para adicionar processos a fila de processos
 void Scheduler::addEndQueue(Process p) {
 	switch(p.getPriority()) {
 		case REAL_TIME:
@@ -23,6 +24,7 @@ void Scheduler::addEndQueue(Process p) {
 	}
 }
 
+// função para preencher a fila de processos
 void Scheduler::fillQueue() {
 	int i = 0;
 	Process p;
@@ -36,7 +38,7 @@ void Scheduler::fillQueue() {
 	processes.erase(processes.begin(),processes.begin()+i);
 }
 
-// ## Funcao de execucao de um processo ## //
+// função para executar um processo
 void Scheduler::executesProcess(Process& p) {
 	switch(p.getPriority()){
 		case REAL_TIME:
@@ -52,8 +54,7 @@ void Scheduler::executesProcess(Process& p) {
 			clock += QUANTUM;
 			break;
 
-		// o default vai ate o fim do processo, nunca sera usado pois esta no case logo acima
-		default: //USUARIO_P3
+		default:			// percorre até o final do processo
 			int i = 0;
 			while(!p.getBlockedResource()) {
 				p.check();
@@ -67,15 +68,16 @@ void Scheduler::executesProcess(Process& p) {
 	return;
 }
 
+// função pra verificar ordem dos processos
 void Scheduler::processOrder() {
 	sort(processes.begin(), processes.end(), firstToExecute);
 }
 
-// verifica se existe algum processo nas filas que ja pode ser executado ## //
+// função que sempre checa se algum processo está pronto para ser executado
 bool Scheduler::nextProcess(Process *p) {
 	if(!realTIME.empty() && realTIME.front().getInitTime() <= clock) {
 		*p = realTIME.front();
-		realTIME.pop();
+		realTIME.pop();	// remove o próximo elemento
 		return true;
 	}
 	if(!userP1.empty() && userP1.front().getInitTime() <= clock) {
@@ -97,10 +99,12 @@ bool Scheduler::nextProcess(Process *p) {
 	return false;
 }
 
+// função que verifica se ainda existe algum processo a ser executado
 bool Scheduler::stillExistsProcess() {
 	return (!realTIME.empty() || !userP1.empty() || !userP2.empty() || !userP3.empty() 	|| !processes.empty());
 }
 
+// função que apresenta fila de processos
 void Scheduler::displayProcessQueue()
 {
 	Process x;
@@ -109,16 +113,16 @@ void Scheduler::displayProcessQueue()
 	for(int i=0; i<(int)realTIME.size(); i++) {
 		x = realTIME.front();
 		cout << x << endl;
-		realTIME.pop();
-		realTIME.push(x);
+		realTIME.pop();		// remove o próximo elemento
+		realTIME.push(x);	// insere um processo no final da fila
 	}
 
 	cout << "\n All user processes with priority 1:  "<< endl;
 	for(int i=0; i<(int)userP1.size(); i++) {
 		x = userP1.front();
 		cout << x << endl;
-		userP1.pop();		// removes next element
-		userP1.push(x);	// inserts a process in the end of queue
+		userP1.pop();
+		userP1.push(x);
 	}
 
 	cout << "\n All user processes with priority 2:  "<< endl;
@@ -138,6 +142,7 @@ void Scheduler::displayProcessQueue()
 	}
 }
 
+// função que apresenta o kernel
 void Scheduler::dispatcher(Process& p) {
 	cout << "\n Dispatcher =>" << '\n';
 	cout << p << endl;
@@ -147,6 +152,7 @@ void Scheduler::dispatcher(Process& p) {
 	return;
 }
 
+// função que apresenta a execução do processos
 void Scheduler::displayExecution(Process p) {
 	cout << "\n  Process " << p.getPID() << " => " << endl;
 	cout << "\tPriority: " << p.getPriority() << endl;
@@ -175,8 +181,8 @@ void Scheduler::displayExecution(Process p) {
 }
 
 void Scheduler::readFile(string filename) {
-	fstream txt;	// to make I/O operations on files
-	txt.open(filename.c_str());		// opening .txt file
+	fstream txt;	// realiza operações de E/S em algum arquivo
+	txt.open(filename.c_str());		// abrindo arquivo .txt
 	string data;
 	vector<int> tmp;
 	char *ptr;
@@ -185,7 +191,7 @@ void Scheduler::readFile(string filename) {
 
 	while(getline(txt, data)) 	{
 		if(data != "") {
-			ptr = strtok((char*)data.c_str(), "\t ,");	// split string into tokens
+			ptr = strtok((char*)data.c_str(),"\t ,");	// divide string em tokens
 			while(ptr != NULL) {
 				tmp.push_back(atoi(ptr));
 				ptr = strtok(NULL,"\t ,");
@@ -193,6 +199,7 @@ void Scheduler::readFile(string filename) {
 		}
 	}
 
+	// atibuição dos valores do processo a instancia
 	for(int i = 0; i < (int)tmp.size(); i += 8) {
 		p.setPID(id);
 		p.setMemoryOffset(-1);
@@ -210,11 +217,12 @@ void Scheduler::readFile(string filename) {
 	}
 }
 
-//	function that returns how much time has passed
+//	função que retorna o tempo de execução
 int Scheduler::getClock() {
 	return clock;
 }
 
+// função que executa processos
 void Scheduler::simulation() {
 	Process p;
 	unsigned int offset;
@@ -227,7 +235,7 @@ void Scheduler::simulation() {
 			if(!p.inMemory()) {
 				offset = m.allocation(p.getAmoutBlocks(),p.getPriority());
 				if(offset==MAX_MEM)	{
-					cout << "\aERROR : MEMORY NOT ALLOCATED TO PROCESS " << p.getPID() << endl;
+					cout << "\a\tERROR : MEMORY NOT ALLOCATED TO PROCESS " << p.getPID() << endl;
 					p.setPriority(p.getPriority()+1);
 					if(p.getPriority() > 3) {
 						p.setPriority(3);
@@ -238,7 +246,7 @@ void Scheduler::simulation() {
 				}
 				else if(offset > MAX_MEM){
 					p.setExecutionTime(0);
-					cout << "\aERROR : MEMORY IS BIGGER THEN THE TOTAL " << endl;
+					cout << "\a\tERROR : MEMORY IS BIGGER THEN THE TOTAL " << endl;
 					clock++;
 					continue;
 				}

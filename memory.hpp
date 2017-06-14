@@ -23,4 +23,4 @@ class Memory {
 		bitset<MAX_MEM> memoir;	// armazena bits: 0 ou 1
 };
 
-#endif //memoriesORY_HPP
+#endif //MEMORY_HPP

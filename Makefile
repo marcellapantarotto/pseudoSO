@@ -5,7 +5,7 @@ simulation: main.o process.o memory.o resource.o scheduler.o
 	@echo " Creating link to objects in 'run' file."
 	@g++ main.o process.o memory.o resource.o scheduler.o -g -std=c++11 -pthread -o run
 	@echo " Ready to run!"
-	@echo " Command to Execute:    ./run processes.txt"
+	@echo " Command to Execute:    ./run <input.txt>"
 
 main.o: main.cpp
 	@echo " Creating main.o"

@@ -14,10 +14,6 @@ ostream& operator<<(ostream& pl,const Process& punit) {
 	return pl;
 }
 
-// int Process::display() {
-// 	 	cout << "\tPID: " << pid << endl;
-//  }
-
 // metodos get() e set() da classe Process
 int Process::getPID() {
  	return this->pid;
@@ -97,7 +93,7 @@ void Process::setBlockedResource(const int bres) {
 	this->blockedResource = bres;
 }
 
-// printing the execution of a process
+// função que bloqueia recurso
 void Process::check() {
 	int resource, hit;
 
@@ -110,7 +106,7 @@ void Process::check() {
 	processTime -= QUANTUM;
 }
 
-// 1 = blocked; 0 = free
+// 1 = bloqueado; 0 = livre
 void Process::freeResources() {
 	if(blockedResource != 0){
 		freeResource(blockedResource);
@@ -118,7 +114,7 @@ void Process::freeResources() {
 	}
 }
 
-// Function that checks if the process is using any resource
+// função que verifica se algum recurso está sento utilizado
 int Process::existsResource() {
 	int is = WITHOUT_RESOURCES;
 	if(getScanner() || getPrinter() || getModem() || getSata()) {
@@ -127,11 +123,11 @@ int Process::existsResource() {
 	return is;
 }
 
-// Function that checks if the are any resources and if they are used
-// if no resources are used, the return value is 0
-// the return value can be 1, 2 or 3 depending on the resource
+// função que checa se existem recursos e se eles são usados
+// se nenhum recurso for usado, deve retornar 0
+// mas, dependendo do recurso, o retorno pode ser 1, 2 ou 3
 int Process::usesResource() {
-	srand(time(NULL));		// creates different sequences each time
+	srand(time(NULL));		// cada vez cria uma sequência nova
 	int use = existsResource();
 	if(use) {
 		use = 0;
@@ -154,7 +150,7 @@ int Process::usesResource() {
 	return use;
 }
 
-// ## Funcao que checa se o processo esta em memoria ## //
+// função que verifica se processo está em memória
 bool Process::inMemory() {
 	bool inside = false;
 	if(this->memoryOffset != -1) {
@@ -163,7 +159,7 @@ bool Process::inMemory() {
 	return inside;
 }
 
-// ## Funcao utilizada na funcao de ordenacao ## //
+// função para verificar ordem de execução
 bool firstToExecute(Process p1, Process p2) {
 	return p1.getInitTime() < p2.getInitTime();
 }
