@@ -184,16 +184,16 @@ void Scheduler::readFile(string filename) {
 	int id = 1;
 
 	while(getline(txt, data)) 	{
-		if(data!="") {
-			ptr = strtok((char*)data.c_str(),"\t ,");	// split string into tokens
-			while(ptr!=NULL) {
+		if(data != "") {
+			ptr = strtok((char*)data.c_str(), "\t ,");	// split string into tokens
+			while(ptr != NULL) {
 				tmp.push_back(atoi(ptr));
 				ptr = strtok(NULL,"\t ,");
 			}
 		}
 	}
 
-	for(int i=0;i<(int)tmp.size();i+=8) {
+	for(int i = 0; i < (int)tmp.size(); i += 8) {
 		p.setPID(id);
 		p.setMemoryOffset(-1);
 		p.setInitTime(tmp[i]);

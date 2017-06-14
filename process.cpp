@@ -14,11 +14,11 @@ ostream& operator<<(ostream& pl,const Process& punit) {
 	return pl;
 }
 
-int Process::display() {
-	 	cout << "\tPID: " << pid << endl;
- }
+// int Process::display() {
+// 	 	cout << "\tPID: " << pid << endl;
+//  }
 
-// set() and get() methos of the class Process
+// metodos get() e set() da classe Process
 int Process::getPID() {
  	return this->pid;
 }

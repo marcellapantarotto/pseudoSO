@@ -33,6 +33,7 @@ class Scheduler
 		void displayProcessQueue();
 		void dispatcher (Process& p);
 		void displayExecution(Process p);
+		
 	public:
 		int clock;
 		void readFile(string filename);

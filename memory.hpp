@@ -12,14 +12,15 @@
 using namespace std;
 
 class Memory {
-	private:
-		bitset<MAX_MEM> mem;
 	public:
 		Memory();
 		void display();
 		unsigned int allocation(unsigned int qtd,int tipo_p);
 		void deallocation(unsigned int offset, unsigned int qtd);
-		unsigned int verify(unsigned int qtd,unsigned int start, unsigned int end);
+		unsigned int verification(unsigned int qtd,unsigned int start, unsigned int end);
+
+	private:
+		bitset<MAX_MEM> memoir;	// armazena bits: 0 ou 1
 };
 
-#endif //MEMORY_HPP
+#endif //memoriesORY_HPP

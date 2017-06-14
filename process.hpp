@@ -27,12 +27,13 @@ class Process
 		Process(){}
 		Process(const int pid, const int priority, const int off, const int hmblocks, const int itime,
 			const int etime, const bool scan, const bool print, const bool modem, const bool sata, int bres):
-			// Construtor:
+			// construtores:
 			pid(pid), priority(priority), memoryOffset(off), amoutBlocks(hmblocks), initTime(itime), processTime(etime),
 			usescan(scan), usePrinter(print), useModem(modem), useSATA(sata), blockedResource(bres) { }
 
 		friend ostream& operator<<(ostream& os,const Process& it);
 
+		//int display();
 		int getPID();
 		void setPID(const int pid);
 		int getPriority();
@@ -61,7 +62,6 @@ class Process
 		bool inMemory();
 		void freeResources();
 		void check();
-		int display();
 
 	private:
 		int pid;
