@@ -11,12 +11,11 @@
 
 using namespace std;
 
-class memory
-{
+class Memory {
 	private:
 		bitset<MAX_MEM> mem;
 	public:
-		memory();
+		Memory();
 		void display();
 		unsigned int allocation(unsigned int qtd,int tipo_p);
 		void deallocation(unsigned int offset, unsigned int qtd);

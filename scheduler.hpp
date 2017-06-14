@@ -1,5 +1,5 @@
-#ifndef scheduler_HPP
-#define scheduler_HPP
+#ifndef SCHEDULER_HPP
+#define SCHEDULER_HPP
 
 #include <fstream>
 #include <vector>
@@ -12,8 +12,7 @@
 #include "process.hpp"
 #include "memory.hpp"
 
-class scheduler
-{
+class Scheduler {
 	private:
 		//typedef std::vector<Process> process_t;
 		vector<Process> processes;
@@ -22,7 +21,8 @@ class scheduler
 		queue<Process> userP3;
 		queue<Process> realTIME;
 
-		memory m;
+		Memory m;
+
 		void startTime();
 		void addEndQueue(Process p);
 		void fillQueue();
@@ -33,6 +33,7 @@ class scheduler
 		void displayProcessQueue();
 		void dispatcher (Process& p);
 		void displayExecution(Process p);
+		
 	public:
 		int clock;
 		void readFile(string filename);
@@ -41,4 +42,4 @@ class scheduler
 
 };
 
-#endif //scheduler_HPP
+#endif //SCHEDULER_HPP

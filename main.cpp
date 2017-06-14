@@ -13,7 +13,7 @@ int main(int argq, char* argv[]) {
 	char* input;
 	input = argv[1];
 
-	scheduler sched;
+	Scheduler sched;
 	InitializeSemaphores();
 	sched.readFile(input);
 	sched.simulation();
