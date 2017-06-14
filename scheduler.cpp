@@ -1,5 +1,6 @@
 #include "scheduler.hpp"
 
+// função que inicia o tempo do escalonador
 //clock = aquantidade de segundo de execução
 void Scheduler::startTime() {
 	clock = 0;
@@ -24,7 +25,7 @@ void Scheduler::addEndQueue(Process p) {
 	}
 }
 
-// função para preencher a fila de processos
+// função para preencher a fila FIFO de processos de acordo com a prioridade
 void Scheduler::fillQueue() {
 	int i = 0;
 	Process p;
@@ -50,14 +51,14 @@ void Scheduler::executesProcess(Process& p) {
 		case USER_P1:
 		case USER_P2:
 		case USER_P3:
-			p.check();
+			p.gives();
 			clock += QUANTUM;
 			break;
 
 		default:			// percorre até o final do processo
 			int i = 0;
 			while(!p.getBlockedResource()) {
-				p.check();
+				p.gives();
 				i++;
 			}
 			clock += QUANTUM*i;
@@ -68,38 +69,43 @@ void Scheduler::executesProcess(Process& p) {
 	return;
 }
 
-// função pra verificar ordem dos processos
+// função determina ordem dos processos basseado na tempo de chegada
 void Scheduler::processOrder() {
 	sort(processes.begin(), processes.end(), firstToExecute);
 }
 
 // função que sempre checa se algum processo está pronto para ser executado
+// true = sim ; false = não
 bool Scheduler::nextProcess(Process *p) {
 	if(!realTIME.empty() && realTIME.front().getInitTime() <= clock) {
 		*p = realTIME.front();
 		realTIME.pop();	// remove o próximo elemento
 		return true;
 	}
+
 	if(!userP1.empty() && userP1.front().getInitTime() <= clock) {
 		*p = userP1.front();
 		userP1.pop();
 		return true;
 	}
+
 	if(!userP2.empty() && userP2.front().getInitTime() <= clock) {
 		*p = userP2.front();
 		userP2.pop();
 		return true;
 	}
+
 	if(!userP3.empty() && userP3.front().getInitTime() <= clock) {
 		*p = userP3.front();
 		userP3.pop();
 		return true;
 	}
-	// ## Nao chegaram processes ainda ## //
+
 	return false;
 }
 
 // função que verifica se ainda existe algum processo a ser executado
+// true = sim ; false = não
 bool Scheduler::stillExistsProcess() {
 	return (!realTIME.empty() || !userP1.empty() || !userP2.empty() || !userP3.empty() 	|| !processes.empty());
 }
@@ -142,7 +148,7 @@ void Scheduler::displayProcessQueue()
 	}
 }
 
-// função que apresenta o kernel
+// função que exbice informações sobre o processo e o executa
 void Scheduler::dispatcher(Process& p) {
 	cout << "\n Dispatcher =>" << '\n';
 	cout << p << endl;
@@ -152,7 +158,7 @@ void Scheduler::dispatcher(Process& p) {
 	return;
 }
 
-// função que apresenta a execução do processos
+// função que apresenta dados do processo em execução
 void Scheduler::displayExecution(Process p) {
 	cout << "\n  Process " << p.getPID() << " => " << endl;
 	cout << "\tPriority: " << p.getPriority() << endl;
@@ -180,6 +186,7 @@ void Scheduler::displayExecution(Process p) {
 	cout << endl;
 }
 
+// função que lê arquivo de entrada e atribui os valores ao processo
 void Scheduler::readFile(string filename) {
 	fstream txt;	// realiza operações de E/S em algum arquivo
 	txt.open(filename.c_str());		// abrindo arquivo .txt

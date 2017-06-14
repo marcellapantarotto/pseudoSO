@@ -10,20 +10,21 @@
 #include <cstdlib>
 #include "resource.hpp"
 
+// variáveis globais
 #define PERCENTAGE 101
 #define QUANTUM 1
 
 using namespace std;
 
-enum prioritys{
-	REAL_TIME = 0,
+// enumeração: constantes do tipo inteiro
+enum priorities {
+	REAL_TIME,
 	USER_P1,
 	USER_P2,
 	USER_P3
 };
 
-class Process
-{
+class Process {
 	public:
 		Process(){}
 		Process(const int pid, const int priority, const int off, const int hmblocks, const int itime,
@@ -61,7 +62,7 @@ class Process
 		void setBlockedResource(const int bres);
 		bool inMemory();
 		void freeResources();
-		void check();
+		void gives();
 
 	private:
 		int pid;

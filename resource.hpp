@@ -5,9 +5,9 @@
 #include <pthread.h>
 
 // enumeração: constantes do tipo inteiro
-enum Resources{
+enum Resources {
   WITHOUT_RESOURCES = 0,
-  WITH_RESOURCES, SCANNER, PRINTER, MODEM, SATA= 1
+  WITH_RESOURCES, SCANNER, PRINTER, MODEM, SATA = 1
 };
 
 // semáforos globais do tipo sem_t

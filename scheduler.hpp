@@ -12,17 +12,18 @@
 #include "process.hpp"
 #include "memory.hpp"
 
-class Scheduler
-{
+class Scheduler {
 	public:
 		int clock;
 		void readFile(string filename);
 		int getClock();
 		void simulation();
-		
+
 	private:
-		//typedef std::vector<Process> process_t;
+		// vetor de todos os processos
 		vector<Process> processes;
+
+		// fila FIFO de execução por prioridade
 		queue<Process> userP1;
 		queue<Process> userP2;
 		queue<Process> userP3;
