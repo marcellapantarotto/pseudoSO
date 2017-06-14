@@ -10,7 +10,7 @@ Memory::Memory(){
 	};
 }
 
-// método para mostra memória disponível
+// método que mostra mapa de bits
 void Memory::display(){
 	for(int i = 0; i < MAX_MEM; i++){
 		cout << memoir[i];
@@ -18,7 +18,8 @@ void Memory::display(){
 	cout << endl;
 }
 
-// método de alocação de memória, checando a quantidade e RAM disponível
+// método de alocação de memória
+// retorna o offset da memória e determina qual tipo de processo está sendo usado
 unsigned int Memory::allocation(unsigned int qtd, int tipo_p){
 	unsigned int offset = MAX_MEM;
 	switch(tipo_p){
@@ -45,7 +46,7 @@ unsigned int Memory::allocation(unsigned int qtd, int tipo_p){
 	return offset;
 }
 
-// método de desatribui a memória a um processo
+// método que usa o offset para desalocar a memória
 void Memory::deallocation(unsigned int offset,unsigned int qtd){
 	int i = offset;
 	while(i<qtd+offset) {
@@ -54,7 +55,7 @@ void Memory::deallocation(unsigned int offset,unsigned int qtd){
 	};
 }
 
-// método de verificação da posição de memória disponível para seu usada
+// método que verifica se existe uma quantidade memória contígua disponível
 unsigned int Memory::verification(unsigned int qtd, unsigned int start, unsigned int end){
 	unsigned int offset = MAX_MEM;
 	int j;
