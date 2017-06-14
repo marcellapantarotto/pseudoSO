@@ -10,38 +10,38 @@ Memory::Memory(){
 	}while(i<MAX_MEM);
 
 }
-unsigned int Memory::allocation(unsigned int qtd, int tipo_p){
+unsigned int Memory::allocation(unsigned int malloc, int type){
 	unsigned int offset = MAX_MEM;
-	switch(tipo_p){
+	switch(type){
 		case REAL_TIME:
-			if(qtd > MAX_REAL){
+			if(malloc > MAX_REAL){
 				offset = 1026; //Verificar
 				return offset;
 			}
-			offset = verify(qtd,START,MAX_REAL); //Verifica quantidade de memoria ram e se ela está entre o inicio e o final.
+			offset = verification(malloc,START,MAX_REAL); //Verifica quantidade de memoria ram e se ela está entre o inicio e o final.
 		  break;
 		default:
-			if(qtd > USER_MAX){
+			if(malloc > USER_MAX){
 				offset = 1026;
 				return offset;
 			}
-			offset = verify(qtd,MAX_REAL,MAX_MEM);
+			offset = verification(malloc,MAX_REAL,MAX_MEM);
 			break;
 	}
 
 	if(offset!=MAX_MEM)
-		for(int i=offset;i<qtd + offset;i++){
+		for(int i=offset;i<malloc + offset;i++){
 			mem[i] = 1;
 		}
 	return offset;
 }
 
-void Memory::deallocation(unsigned int offset,unsigned int qtd){
+void Memory::deallocation(unsigned int offset,unsigned int malloc){
 	int i=offset;
 	do {
 		mem[i] = 0;
 		i++;
-	} while(i<qtd+offset);
+	} while(i<malloc+offset);
 }
 
 void Memory::display(){
@@ -50,16 +50,16 @@ void Memory::display(){
 	}
 	cout << endl;
 }
-unsigned int Memory::verify(unsigned int qtd, unsigned int start, unsigned int end){
+unsigned int Memory::verification(unsigned int malloc, unsigned int start, unsigned int end){
 	unsigned int offset = MAX_MEM;
 	int j;
 
 	for(int i=start; i<end; i++)	{
 		j = i;
 
-		while (mem[j] == 0 && j < qtd + i) j++;
+		while (mem[j] == 0 && j < malloc + i) j++;
 
-		if (j == qtd + i){
+		if (j == malloc + i){
 			offset = i;
 			break;
 		}

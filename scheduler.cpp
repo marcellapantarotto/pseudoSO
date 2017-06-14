@@ -71,7 +71,7 @@ void Scheduler::processOrder() {
 	sort(processes.begin(), processes.end(), firstToExecute);
 }
 
-// ## verify se existe algum processo nas filas que ja pode ser executado ## //
+// ## verification se existe algum processo nas filas que ja pode ser executado ## //
 bool Scheduler::nextProcess(Process *p) {
 	if(!realTIME.empty() && realTIME.front().getInitTime() <= clock) {
 		*p = realTIME.front();

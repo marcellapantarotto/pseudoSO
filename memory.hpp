@@ -6,7 +6,7 @@
 
 #define MAX_MEM 1024
 #define MAX_REAL 64
-#define USER_MAX MAX_MEM-MAX_REAL
+#define USER_MAX MAX_MEM, MAX_REAL
 #define START 0
 
 using namespace std;
@@ -17,9 +17,9 @@ class Memory {
 	public:
 		Memory();
 		void display();
-		unsigned int allocation(unsigned int qtd,int tipo_p);
-		void deallocation(unsigned int offset, unsigned int qtd);
-		unsigned int verify(unsigned int qtd,unsigned int start, unsigned int end);
+		unsigned int allocation(unsigned int malloc,int type);
+		void deallocation(unsigned int offset, unsigned int malloc);
+		unsigned int verification(unsigned int malloc,unsigned int start, unsigned int end);
 };
 
 #endif //MEMORY_HPP
