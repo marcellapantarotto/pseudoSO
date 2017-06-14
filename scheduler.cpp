@@ -1,11 +1,11 @@
 #include "scheduler.hpp"
 
 //clock = seconds passed
-void Scheduler::startTime() {
+void scheduler::startTime() {
 	clock = 0;
 }
 
-void Scheduler::addEndQueue(Process p) {
+void scheduler::addEndQueue(Process p) {
 	switch(p.getPriority()) {
 		case REAL_TIME:
 			realTIME.push(p);
@@ -23,7 +23,7 @@ void Scheduler::addEndQueue(Process p) {
 	}
 }
 
-void Scheduler::fillQueue() {
+void scheduler::fillQueue() {
 	int i = 0;
 	Process p;
 
@@ -37,7 +37,7 @@ void Scheduler::fillQueue() {
 }
 
 // ## Funcao de execucao de um processo ## //
-void Scheduler::executesProcess(Process& p) {
+void scheduler::executesProcess(Process& p) {
 	switch(p.getPriority()){
 		case REAL_TIME:
 			clock += p.getExecutionTime();
@@ -67,12 +67,12 @@ void Scheduler::executesProcess(Process& p) {
 	return;
 }
 
-void Scheduler::processOrder() {
+void scheduler::processOrder() {
 	sort(processes.begin(), processes.end(), firstToExecute);
 }
 
-// ## verification se existe algum processo nas filas que ja pode ser executado ## //
-bool Scheduler::nextProcess(Process *p) {
+// ## verify se existe algum processo nas filas que ja pode ser executado ## //
+bool scheduler::nextProcess(Process *p) {
 	if(!realTIME.empty() && realTIME.front().getInitTime() <= clock) {
 		*p = realTIME.front();
 		realTIME.pop();
@@ -97,7 +97,7 @@ bool Scheduler::nextProcess(Process *p) {
 	return false;
 }
 
-bool Scheduler::stillExistsProcess() {
+bool scheduler::stillExistsProcess() {
 	return (
 			!realTIME.empty() ||
 			!userP1.empty() 	||
@@ -105,7 +105,7 @@ bool Scheduler::stillExistsProcess() {
 			!userP3.empty() 	|| !processes.empty());
 }
 
-void Scheduler::displayProcessQueue()
+void scheduler::displayProcessQueue()
 {
 	Process x;
 	//cout << "Todos os processes: " << endl;
@@ -145,7 +145,7 @@ void Scheduler::displayProcessQueue()
 	}
 }
 
-void Scheduler::dispatcher(Process& p) {
+void scheduler::dispatcher(Process& p) {
 	cout << "\n Dispatcher =>" << '\n';
 	cout << p << endl;
 	executesProcess(p);
@@ -154,7 +154,7 @@ void Scheduler::dispatcher(Process& p) {
 	return;
 }
 
-void Scheduler::displayExecution(Process p) {
+void scheduler::displayExecution(Process p) {
 	cout << "\n  Process " << p.getPID() << " => " << endl;
 	cout << "\tPriority: " << p.getPriority() << endl;
 	cout << "\tTime Since Arrival: " << clock - p.getInitTime() << endl;
@@ -181,14 +181,14 @@ void Scheduler::displayExecution(Process p) {
 	cout << endl;
 }
 
-void Scheduler::readFile(string filename) {
+void scheduler::readFile(string filename) {
 	fstream txt;	// to make I/O operations on files
 	txt.open(filename.c_str());		// opening .txt file
 	string data;
 	vector<int> tmp;
 	char *ptr;
 	Process p;
-	int id = 1;
+	int id = 0;
 
 	while(getline(txt, data)) 	{
 		if(data!="") {
@@ -218,18 +218,17 @@ void Scheduler::readFile(string filename) {
 }
 
 //	function that returns how much time has passed
-int Scheduler::getClock() {
+int scheduler::getClock() {
 	return clock;
 }
 
-void Scheduler::simulation() {
+void scheduler::simulation() {
 	Process p;
 	unsigned int offset;
 	processOrder();
 	startTime();
 
 	while(stillExistsProcess()) {
-		//Memory();
 		fillQueue();
 		if(nextProcess(&p)){
 			if(!p.inMemory()) {
