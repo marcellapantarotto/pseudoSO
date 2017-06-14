@@ -22,7 +22,7 @@ class scheduler
 		queue<Process> userP3;
 		queue<Process> realTIME;
 
-		memory m;
+		Memory m;
 		void startTime();
 		void addEndQueue(Process p);
 		void fillQueue();

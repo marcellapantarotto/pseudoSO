@@ -1,16 +1,22 @@
 #include "memory.hpp"
 #include <iostream>
 
-memory::memory(){
-		//Zera memoria
+Memory::Memory(){
 	int i=0;
-	do{
-		mem[i] = 0;
+	while(i<MAX_MEM){
+		mem[i] = 0;		// zera memoria
 		i++;
-	}while(i<MAX_MEM);
-
+	};
 }
-unsigned int memory::allocation(unsigned int qtd, int tipo_p){
+
+void Memory::display(){
+	for(int i = 0; i < MAX_MEM; i++){
+		cout << mem[i];
+	}
+	cout << endl;
+}
+
+unsigned int Memory::allocation(unsigned int qtd, int tipo_p){
 	unsigned int offset = MAX_MEM;
 	switch(tipo_p){
 		case REAL_TIME:
@@ -36,25 +42,19 @@ unsigned int memory::allocation(unsigned int qtd, int tipo_p){
 	return offset;
 }
 
-void memory::deallocation(unsigned int offset,unsigned int qtd){
-	int i=offset;
-	do {
+void Memory::deallocation(unsigned int offset,unsigned int qtd){
+	int i = offset;
+	while(i<qtd+offset) {
 		mem[i] = 0;
 		i++;
-	} while(i<qtd+offset);
+	};
 }
 
-void memory::display(){
-	for(int i = 0; i < MAX_MEM; i++){
-		cout << mem[i];
-	}
-	cout << endl;
-}
-unsigned int memory::verify(unsigned int qtd, unsigned int start, unsigned int end){
+unsigned int Memory::verify(unsigned int qtd, unsigned int start, unsigned int end){
 	unsigned int offset = MAX_MEM;
 	int j;
 
-	for(int i=start; i<end; i++)	{
+	for(int i=start; i<end; i++) {
 		j = i;
 
 		while (mem[j] == 0 && j < qtd + i) j++;

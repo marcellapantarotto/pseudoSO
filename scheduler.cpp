@@ -71,7 +71,7 @@ void scheduler::processOrder() {
 	sort(processes.begin(), processes.end(), firstToExecute);
 }
 
-// ## verify se existe algum processo nas filas que ja pode ser executado ## //
+// verifica se existe algum processo nas filas que ja pode ser executado ## //
 bool scheduler::nextProcess(Process *p) {
 	if(!realTIME.empty() && realTIME.front().getInitTime() <= clock) {
 		*p = realTIME.front();
@@ -108,9 +108,6 @@ bool scheduler::stillExistsProcess() {
 void scheduler::displayProcessQueue()
 {
 	Process x;
-	//cout << "Todos os processes: " << endl;
-	//for(Process p : processes)
-	//dispatcher(p);
 
 	cout << "\n All processes in real time:  " << endl;
 	for(int i=0; i<(int)realTIME.size(); i++) {
@@ -188,7 +185,7 @@ void scheduler::readFile(string filename) {
 	vector<int> tmp;
 	char *ptr;
 	Process p;
-	int id = 0;
+	int id = 1;
 
 	while(getline(txt, data)) 	{
 		if(data!="") {
@@ -234,7 +231,7 @@ void scheduler::simulation() {
 			if(!p.inMemory()) {
 				offset = m.allocation(p.getAmoutBlocks(),p.getPriority());
 				if(offset==MAX_MEM)	{
-					cout << "\a\tERROR : MEMORY NOT ALLOCATED TO PROCESS " << p.getPID() << endl;
+					cout << "\aERROR : MEMORY NOT ALLOCATED TO PROCESS " << p.getPID() << endl;
 					p.setPriority(p.getPriority()+1);
 					if(p.getPriority() > 3) {
 						p.setPriority(3);
@@ -245,7 +242,7 @@ void scheduler::simulation() {
 				}
 				else if(offset > MAX_MEM){
 					p.setExecutionTime(0);
-					cout << "\a\tERROR : MEMORY IS BIGGER THEN THE TOTAL " << endl;
+					cout << "\aERROR : MEMORY IS BIGGER THEN THE TOTAL " << endl;
 					clock++;
 					continue;
 				}
