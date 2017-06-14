@@ -137,7 +137,7 @@ int Process::usesResource() {
 		use = 0;
 		if(rand()%100 < PERCENTAGE) {
 			int redo;
-			do {
+			while(redo) {
 				redo = 0;
 				use = rand()%4 + 1;
 				switch(use) {
@@ -154,7 +154,7 @@ int Process::usesResource() {
 						if(!getSata()) redo = 1;
 						break;
 				}
-			}while(redo);
+			};
 		}
 	}
 	return use;
