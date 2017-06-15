@@ -101,7 +101,6 @@ void Process::setSata(const bool sata) {
 int Process::getBlockedResource() {
 	return this->blockedResource;
 }
-
 void Process::setBlockedResource(const int bres) {
 	this->blockedResource = bres;
 }

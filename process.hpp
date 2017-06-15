@@ -34,7 +34,6 @@ class Process {
 
 		friend ostream& operator<<(ostream& os,const Process& it);
 
-		//int display();
 		int getPID();
 		void setPID(const int pid);
 		int getPriority();
